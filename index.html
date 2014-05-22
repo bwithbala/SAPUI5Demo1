@@ -1,291 +1,273 @@
+
 <!DOCTYPE HTML>
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta http-equiv='Content-Type' content='text/html;charset=UTF-8' />
-
-<title>SCN Feed</title>
-
-<!-- UI5 Bootstrap -->
-<script src="https://sapui5.netweaver.ondemand.com/resources/sap-ui-core.js"
-	type="text/javascript" id="sap-ui-bootstrap" 
-	data-sap-ui-libs="sap.m"
+<title>SplitApp - sap.m</title>
+<script src="../../../resources/sap-ui-core.js" type="text/javascript"
+	id="sap-ui-bootstrap" data-sap-ui-libs="sap.m,sap.ui.commons"
 	data-sap-ui-theme="sap_bluecrystal">
- </script>
-
-<script src="js/jquery.jgfeed.js"></script>
-
-<style type="text/css">
-.sapMStdTileNumS {
-	font-size: 1rem;
-	color: green;
-	margin-top: -0.125rem;
-}
-
-.sapMStdTileInfo {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	text-align: start;
-	font-size: 0.5rem;
-	color: red;
-	margin-top: 2rem;
-}
-</style>
-
-
+	
+</script>
 <script type="text/javascript">
-			
-			// create the data
-			
-			var aData = {
-					feedEntries: [ {
-							
-/* 							title: "http://scn.sap.com/community/feeds/blogs",
-							description: "SCN Blog Posts",
-							icon: "sap-icon://employee", */
-							
-							title: "http://www.maalaimalar.com/RSS/SectionRssFeed.aspx?Id=1&Main=18",
-							description: "Maalai Malar - Head Lines",
-							icon: "sap-icon://employee",							
+	jQuery.sap.initMobile();
 
-						}, {
-							
-							title: "http://www.maalaimalar.com/RSS/SectionRssFeed.aspx?Id=19&Main=18",
-							description: "Maalai Malar - Head Lines",
-							icon: "sap-icon://documents",
-						
-						}, {
-							
-							title: "http://www.maalaimalar.com/RSS/SectionRssFeed.aspx?Id=114&Main=2",
-							description: "Maalai Malar - Cinema",
-							icon: "sap-icon://discussion",
-						
-						},{
-							
-							title: "http://scn.sap.com/community/developer-center/front-end/blog/feeds/posts",
-							description: "SAPUI5 Space Blogs",
-							icon: "sap-icon://dimension",
-				
-						}, 
-						
+	//create first detail page
+	var oDetailPage = new sap.m.Page(
+			"detail",
+			{
+				title : "Detail 1",
+				content : [ new sap.m.Label({
+					text : "this is Detail 1"
+				}),
+				new sap.m.Button({
+					text: "To DetailDetail",
+					press: function() {oSplitApp.to("detailDetail")}
+				})
+				],
+				showNavButton: jQuery.device.is.phone,
+				navButtonText : "Back",
+				navButtonPress : function(){
+					oSplitApp.backDetail();
+				},
+				subHeader : new sap.m.Bar({
+					contentMiddle : [ new sap.m.Button({
+						text : "show/hide",
+						press : function() {
+							oSplitApp.setMode(sap.m.SplitAppMode.ShowHideMode)
+						}
+					}), new sap.m.Button({
+						text : "stretch/compress",
+						press : function() {
+							oSplitApp.setMode(sap.m.SplitAppMode.StretchCompressMode)
+						}
+					}), new sap.m.Button({
+						text : "hide",
+						press: function(){
+							oSplitApp.setMode(sap.m.SplitAppMode.HideMode)
+						}
+					}), new sap.m.Button({
+						text : "popover",
+						press : function() {
+							oSplitApp.setMode(sap.m.SplitAppMode.PopoverMode)
+						}
+					})]
+				}),
+				footer : new sap.m.Bar(
 						{
-							
-							title: "http://www.maalaimalar.com/RSS/SectionRssFeed.aspx?Id=114&Main=2",
-							description: "Maalai Malar - Cinema Kisu Kisu",
-							icon: "sap-icon://display",
-				
-						},
-						
-						
-						/*
+							id : 'detail-footer',
+							contentMiddle : [
+									new sap.m.Button(
+											{
+												icon : "images/iconCompetitors.png"
+											}),
+									new sap.m.Button(
+											{
+												icon : "images/iconCompetitors.png"
+											}),
+									new sap.m.Button(
+											{
+												icon : "images/iconCompetitors.png"
+											}),
+									new sap.m.Button(
+											{
+												icon : "images/iconCompetitors.png"
+											}) ]
+						})
+			}).addStyleClass("sapUiStdPage");
+	var oDetailDetailPage = new sap.m.Page(
+			"detailDetail",
+			{
+				title : "Detail Detail",
+				content : [ new sap.m.Label({
+					text : "this is Detail Detail"
+				}) ],
+				showNavButton: true,
+				navButtonText : "Back",
+				navButtonPress : function(){
+					oSplitApp.backDetail();
+				},
+				subHeader : new sap.m.Bar({
+					contentMiddle : [ new sap.m.Button({
+						text : "show/hide",
+						press : function() {
+							oSplitApp.setMode(sap.m.SplitAppMode.ShowHideMode)
+						}
+					}), new sap.m.Button({
+						text : "stretch/compress",
+						press : function() {
+							oSplitApp.setMode(sap.m.SplitAppMode.StretchCompressMode)
+						}
+					}), new sap.m.Button({
+						text : "hide",
+						press: function(){
+							oSplitApp.setMode(sap.m.SplitAppMode.HideMode)
+						}
+					}), new sap.m.Button({
+						text : "popover",
+						press : function() {
+							oSplitApp.setMode(sap.m.SplitAppMode.PopoverMode)
+						}
+					}) ]
+				})
+			}).addStyleClass("sapUiStdPage");
+	//create second detail page
+	var oDetailPage2 = new sap.m.Page(
+			"detail2",
+			{
+				title : "Detail 2",
+				showNavButton: true,
+				navButtonText : "Back",
+				navButtonPress : function(){
+					oSplitApp.backDetail();
+				},
+				content : [ new sap.m.Label({
+					text : "this is Detail 2"
+				}), new sap.m.Input() ],
+				subHeader : new sap.m.Bar({
+					contentMiddle : []
+				}),
+				footer : new sap.m.Bar(
 						{
-							
-							
-							title: "http://scn.sap.com/community/feeds/unansweredthreads",
-							description: "Unanswered Questions",
-							icon: "sap-icon://search",
-				
-						}, 
-							{
-							
-							title: "http://scn.sap.com/community/feeds/popularthreads",
-							description: "Popular Discussions",
-							icon: "sap-icon://discussion-2",
-				
-						}, 
-						
-						{
-						    title: "http://scn.sap.com/community/feeds/messages",
-							description: "Discussion Messages",
-							icon: "sap-icon://action",
-						},
-						*/
-				 ]
-				};
+							id : 'detai2l-footer',
+							contentMiddle : [
+									new sap.m.Button(
+											{
+												icon : "images/iconCompetitors.png"
+											}),
+									new sap.m.Button(
+											{
+												icon : "images/iconCompetitors.png"
+											}),
+									new sap.m.Button(
+											{
+												icon : "images/iconCompetitors.png"
+											}),
+									new sap.m.Button(
+											{
+												icon : "images/iconCompetitors.png"
+											}) ]
+						})
+			}).addStyleClass("sapUiStdPage");
 
-			
-			var oModel = new sap.ui.model.json.JSONModel();
-			oModel.setData(aData);
-			
-			var oItemTemplate = new sap.m.StandardListItem({
-				title: "{title}",
-				description: "{description}",
-				icon: "{icon}",
-				type: "Active"
-			})
-			
-			
-			/* 1) select dialog with list binding and static parameters */
-			var oSelectDialog = new sap.m.SelectDialog("SelectDialog", {
-				title: "Choose SCN Feed for which you want to See Data",
-				noDataText: "Sorry, no feeds are available",
+	//create first master page
+
+	var oMasterPage = new sap.m.Page(
+			"master",
+			{
+				title : "Master",
+				icon: "images/SAPUI5.jpg",
+				content : [ new sap.m.List({
+					items : [ new sap.m.StandardListItem({
+						title : "To Master 2",
+						type : "Navigation",
+						press : function() {
+							oSplitApp.toMaster("master2");
+						}
+					})]
+				}) ],
+				footer : new sap.m.Bar(
+						{
+							id : 'master-footer',
+							contentMiddle : [
+									new sap.m.Button(
+											{
+												icon : "images/iconCompetitors.png"
+											}),
+									new sap.m.Button(
+											{
+												icon : "images/iconCompetitors.png"
+											}),
+									new sap.m.Button(
+											{
+												icon : "images/iconCompetitors.png"
+											}),
+									new sap.m.Button(
+											{
+												icon : "images/iconCompetitors.png"
+											}) ]
+						})
 			});
-
-			// set model & bind Aggregation
-			oSelectDialog.setModel(oModel);
-			oSelectDialog.bindAggregation("items", "/feedEntries", oItemTemplate);
-			
-			// attach close listener
-			oSelectDialog.attachConfirm(function (oEvent) {
-				var selectedItem = oEvent.getParameter("selectedItem");
-				if (selectedItem) {
-					oSuggestInput.setValue(selectedItem.getTitle());
-				}
+	//create second master page
+	var oMasterPage2 = new sap.m.Page(
+			"master2",
+			{
+				title : "Master 2",
+				showNavButton : true,
+				navButtonPress : function() {
+					oSplitApp.backMaster();
+				},
+				icon: "images/SAPUI5.jpg",
+				content : [ new sap.m.List({
+					mode: jQuery.device.is.phone ? sap.m.ListMode.None : sap.m.ListMode.SingleSelectMaster,
+					select: function(oEv) {
+						if(oEv.getParameter("listItem").getId() == "listDetail2") {
+							oSplitApp.toDetail("detail2");
+						}else {
+							oSplitApp.toDetail("detail");
+						}
+					},
+					items : [ 
+						new sap.m.StandardListItem("listDetail",{
+							title : "To Detail 1",
+							type: sap.m.ListType.Active,
+							press: function(oEv){
+								oSplitApp.toDetail("detail");
+							}
+						}),
+						new sap.m.StandardListItem("listDetail2",{
+							title : "To Detail 2",
+							type: sap.m.ListType.Active,
+							press: function(oEv){
+								oSplitApp.toDetail("detail2");
+							}
+						})]
+				})],
+				footer : new sap.m.Bar(
+						{
+							id : 'master2-footer',
+							contentMiddle : [
+									new sap.m.Button (
+											{
+												icon : "images/iconCompetitors.png"
+											}),
+									new sap.m.Button(
+											{
+												icon : "images/iconCompetitors.png"
+											}),
+									new sap.m.Button(
+											{
+												icon : "images/iconCompetitors.png"
+											}),
+									new sap.m.Button(
+											{
+												icon : "images/iconCompetitors.png"
+											}) ]
+						})
 			});
-			
 	
-			
-			var oSuggestInput = new sap.m.Input("suginput", {
-				placeholder: "Select SCN Feed",
-				showSuggestion: true,
-				showValueHelp: true,
-				valueHelpRequest: function(evt) {
-					
-					// initiate model
-					oSelectDialog.setModel(oModel);
-
-					// bind aggregation with filters
-					oSelectDialog.bindAggregation("items", {
-						path: "/feedEntries",
-						template: oItemTemplate
-					});
-
-					// open dialog
-					oSelectDialog.open(oSuggestInput.getValue());
-					
-				}
-			});
-			oSuggestInput.setModel(oModel);
-			oSuggestInput.bindAggregation("suggestionItems", "/feedEntries", new sap.ui.core.Item({text: "{title}"}));
-			
-       	  jQuery.sap.require("sap.ui.core.IconPool");
-			
-		    var app = new sap.m.App();
-			var page = new sap.m.Page({});
-		    page.setEnableScrolling(false);
-		    app.setInitialPage(page.getId());
-			page.setShowHeader(true);
-			
-            var oButtonDisplay = new sap.m.Button("display", {
-				type: sap.m.ButtonType.Default,
-				text: "Display",
-				icon: sap.ui.core.IconPool.getIconURI("display"),
-				enabled: true,
-				press : showData
-			});
-		    
-		    
-		    var oButtonReset = new sap.m.Button("refresh", {
-				type: sap.m.ButtonType.Default,
-				text: "Refresh",
-				icon: sap.ui.core.IconPool.getIconURI("refresh"),
-				enabled: true,
-				press : resetData
-			});
-		    
-		    
-			app.addPage(page);
-			page.setTitle('SCN Feed'); 
-			page.addContent(oSuggestInput);
-			page.addContent(oButtonDisplay);
-			page.addContent(oButtonReset);
-		   
-		    app.placeAt('content');			
-		    
-		    var oTileContainer = new sap.m.TileContainer('myTile');
 	
-			function handlePress(oEvent) {
-			    window.open(oEvent.oSource.getActiveIcon(), "_blank");
-			    
-			    
-			    
-			}
-			
-			
-			function showData(oEvent){
-				
-				if (!oSuggestInput.getValue()) {
-					jQuery.sap.require("sap.m.MessageBox");
-					sap.m.MessageBox.alert("Complete your input first.");
-					return;
-				}
-							
-							
-			    var data = { FeedCollection : [] };
-			    
-			    var urlFeed = oSuggestInput.getValue(); 
-				$.jGFeed(urlFeed,
-						  function(feeds){
-						    if(!feeds.entries.length){
-						      // there was an error
-						      jQuery.sap.require("sap.m.MessageToast");
-						      sap.m.MessageToast.show("No Data Found!");
-						    }
-						    
-						    else{
-						    						    
-						    for(var i=0; i<feeds.entries.length; i++){
-						      var entry = feeds.entries[i];
-	     					      
-							    var FeedArray = {};
-							 
-							    var date = new Date(entry.publishedDate);
+	//create SplitApp()
+	var oSplitApp = new sap.m.SplitApp({
+		detailPages: [oDetailPage, oDetailDetailPage, oDetailPage2],
+		masterPages: [oMasterPage, oMasterPage2],
+		initialDetail: "detail",
+		initialMaster: "master",
+		afterMasterOpen: function(){
+			jQuery.sap.log.info("master is opened");
+		},
+		afterMasterClose: function(){
+			jQuery.sap.log.info("master is closed");
+		}
+	});
 
-							    var months = Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-							    var string = date.getDate() + " " + months[date.getMonth()] + " " + date.getFullYear();
+	if(jQuery.device.is.tablet || jQuery.device.is.desktop){
+		oSplitApp.setDefaultTransitionNameDetail("fade");	
+	}
 
-							    FeedArray.Number = string;
-							    FeedArray.Title = entry.title;
-							    FeedArray.Info = entry.author;	
-							    FeedArray.ActiveIcon = entry.link;
-							    var fName = entry.author.substr(0,entry.author.indexOf(' ')); 
-							    var lName = entry.author.substr(entry.author.indexOf(' ')+1); 
-							    var fullName = fName.toLowerCase() + "." + lName.toLowerCase(); 
-							    var iconUrl = 'http://scn.sap.com/people/' + fullName + '/avatar/46.png';
-							    FeedArray.Icon = iconUrl;
-							    
-							 	data.FeedCollection.push( { Feed: FeedArray } );
-						    }
-						
-						    var oModel = new sap.ui.model.json.JSONModel(data);
-						   
-						    var oTiles = new sap.m.StandardTile({
-						        icon : "{Feed/Icon}",            
-						        number : "{Feed/Number}",
-						        title : "{Feed/Title}",
-								info : "{Feed/Info}",
-								activeIcon : "{Feed/ActiveIcon}",
-								press : handlePress
-						    })
-						    
-						    
-						    oTileContainer.bindAggregation("tiles",{
-						      path:"/FeedCollection",
-						      template:oTiles
-						    });
-						    oTileContainer.setModel(oModel);
-						    
-					
-						    
-							 page.addContent(oTileContainer);
-						    
-						    }
-						}, 30); 
-				
-			}
-  			
-			function resetData(oEvent) {
-				
-				oTileContainer.destroyTiles();
-				oSuggestInput.setValue();
-				
-			}
-			
-		</script>
+	oSplitApp.placeAt("body");
+</script>
 </head>
-<body id="content" class="sapUiBody">
+<body id="body" class="sapUiBody">
 </body>
 </html>
-
-
