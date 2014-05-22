@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="UTF-8">
+    <title>Display SCN (Or Any) RSS feed into FeedTile</title>
+
+	
+    <!-- UI5 Bootstrap -->
+    <script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+            type="text/javascript"
+            id="sap-ui-bootstrap"
+            data-sap-ui-libs="sap.ui.commons,sap.suite.ui.commons,sap.m"
+            data-sap-ui-theme="sap_bluecrystal">
+    </script>
+
+
+<script src="js/jquery.jgfeed.js"></script>
+
+<style type="text/css">
+
+.sapSuiteUiCommonsFeedTileText {
+position: relative;
+top: 53%;
+height: 47%;
+background-color: yellow;
+border-bottom-right-radius: 8px;
+border-bottom-left-radius: 8px;
+}
+
+.sapSuiteUiCommonsFeedTileTitle {
+font-family: 'OpenSans-Semibold',sans-serif;
+color: green;
+font-size: 1.125rem;
+padding: 8px 15px 0 15px;
+word-wrap: break-word;
+overflow: hidden;
+height: 53%;
+}
+
+.sapSuiteUiCommonsFeedTileLowerText {
+margin-top: 6px;
+font-size: .875rem;
+font-family: 'OpenSans-Regular',sans-serif;
+color: red;
+width: 100%;
+}
+
+
+</style>
+
+<script type="text/javascript">
+	
+//create the ApplicationHeader control
+var oAppHeader = new sap.ui.commons.ApplicationHeader("appHeader"); 
+
+//configure the branding area
+oAppHeader.setLogoSrc("http://www.sap.com/global/images/SAPLogo.gif");
+oAppHeader.setLogoText("Display SCN (Or Any) RSS feed into FeedTile");
+
+//configure the welcome area
+oAppHeader.setDisplayWelcome(true);
+oAppHeader.setUserName("Chandrashekhar Mahajan");
+
+//configure the log off area
+oAppHeader.setDisplayLogoff(true);
+
+oAppHeader.placeAt("content");
+
+
+//Create a ListBox
+var oListBox = new sap.ui.commons.ListBox("Feeds", {items : [
+			new sap.ui.core.ListItem("Feed1", {text:"http://scn.sap.com/community/feeds/blogs", additionalText:"SCN Blogs"}),
+			new sap.ui.core.ListItem("Feed2", {text:"http://scn.sap.com/community/feeds/documents", additionalText:"SCN Documents"}),
+			new sap.ui.core.ListItem("Feed3", {text:"http://scn.sap.com/community/feeds/threads", additionalText:"SCN Discussions"}),
+			new sap.ui.core.ListItem("Feed4", {text:"http://scn.sap.com/community/developer-center/front-end/blog/feeds/posts", additionalText:"UI5 Space Blogs"}),
+			new sap.ui.core.ListItem("Feed5", {text:"http://scn.sap.com/community/abap/blog/feeds/posts", additionalText:"ABAP Space Blogs"}),
+			new sap.ui.core.ListItem("Feed6", {text:"http://sapinsider.wispubs.com/Feeds/Master/Master-Feed", additionalText:"SAP Insider Feeds"}),
+			new sap.ui.core.ListItem("Feed7", {text:"https://news.google.com/?output=rss", additionalText:"Google News"}),
+			new sap.ui.core.ListItem("Feed8", {text:"http://www.news-sap.com/feed/", additionalText:"SAP News Feed"}),
+			new sap.ui.core.ListItem("Feed9", {text:"http://timesofindia.feedsportal.com/c/33039/f/533922/index.rss", additionalText:"Science News - TOI"}),
+			new sap.ui.core.ListItem("Feed10", {text:"http://feeds.feedburner.com/jonerpfeeds", additionalText:"Feeds from John ERP"}),
+				]
+		});
+
+//Create a DropdownBox
+var oDropdownBox = new sap.ui.commons.DropdownBox("DropdownBox2", {
+		tooltip:"Feed", 
+		displaySecondaryValues:true, 
+		"association:listBox" : oListBox, 
+		width: "400px"
+		});
+
+// Attach the DropdownBox to the page
+oDropdownBox.placeAt("content");
+
+
+// Create a container for the FeedTile with a specified height and width 
+var oBorderLayout = new sap.ui.commons.layout.BorderLayout({width: "499px", height: "214px"});
+
+//Search Button
+var oBtnDisplay = new sap.ui.commons.Button({
+	text : "Search",
+	tooltip : "Search",
+	press : function() {
+		
+		var url = oDropdownBox.getValue();
+		var articles = new Array();
+		
+		var feedURL = url;
+			//'http://scn.sap.com/community/feeds/blogs'
+			//'https://news.google.com/?output=rss'
+			//'http://scn.sap.com/community/developer-center/front-end/blog/feeds/posts';
+			//'http://feeds.nbcnews.com/feeds/topstories'
+			//'http://scn.sap.com/community/feeds/popularthreads' 
+			//'http://scn.sap.com/community/feeds/blogs' 
+			//'http://scn.sap.com/community/feeds/allcontent' 
+			//'http://feeds.feedburner.com/jonerpfeeds'
+			//'http://sapinsider.wispubs.com/Feeds/Master/Master-Feed'
+			//'http://www.news-sap.com/feed/'
+			//'http://andvijaysays.com/feed/' 
+			//'http://feeds.reuters.com/reuters/INtopNews'
+			//'http://feeds.wired.com/WiredReviews'
+			//'http://www.rssmicro.com/rss.web?q=CEO'
+			//'http://timesofindia.feedsportal.com/c/33039/f/533922/index.rss'
+			//'http://timesofindia.feedsportal.com/c/33039/f/533916/index.rss' 
+			
+			
+		$.jGFeed(feedURL,
+				  function(feeds){
+				    // Check for errors
+				  if(!feeds.entries.length){
+				      jQuery.sap.require("sap.m.MessageToast");
+				      sap.m.MessageToast.show("No Data Found!");
+				    }
+				    
+				    else{
+				   					    
+				    for(var i=0; i<feeds.entries.length; i++){
+				      var entry = feeds.entries[i];
+				      					      
+				      articles.push( new sap.suite.ui.commons.FeedItem({
+				    		title: entry.title,
+				    		image: 'http://scn.sap.com/resources/sbs_static/2406/developer-center-picture-5-transp.png',                           // "http://www.admins.li/uploads/scnlogo.gif",
+				    		link: entry.link,
+				    		source: entry.author, 
+				    		publicationDate: new Date(entry.publishedDate)		
+				    	}) );
+				    }
+				    var oFeedTile = new sap.suite.ui.commons.FeedTile({
+				    	items: articles
+				    });
+				
+				    // Add the FeedTile to the container
+				    oBorderLayout.createArea(sap.ui.commons.layout.BorderLayoutAreaTypes.top, oFeedTile );
+				    oBorderLayout.setAreaData(sap.ui.commons.layout.BorderLayoutAreaTypes.top, {
+				    	size : "100%",
+				    	visible : true
+				    });
+
+				    // attach it to some element in the page
+				    oBorderLayout.placeAt("content");
+				    
+				    }  
+				    
+				}, 30); 		
+		
+		}
+	});
+	
+oBtnDisplay.placeAt("content");	
+
+//Reset Button. Reset values to earlier stage
+oButtonReset = new sap.ui.commons.Button({
+	text : 'Reset',
+	press : function() {         
+		oBorderLayout.destroyTop();
+	}
+});
+oButtonReset.placeAt("content");
+	
+ 
+</script>
+</head>
+
+<body class="sapUiBody" role="application">
+   
+    <div id="content"></div>
+</body>
+</html>
