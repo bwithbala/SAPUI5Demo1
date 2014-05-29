@@ -148,13 +148,13 @@
 			});
 		    
 		    
-			app.addPage(page);
+		//	app.addPage(page);
 			page.setTitle('SCN Feed'); 
 			page.addContent(oSuggestInput);
 			page.addContent(oButtonDisplay);
 			page.addContent(oButtonReset);
 		   
-		    app.placeAt('content');			
+		//    app.placeAt('content');			
 		    
 		    var oTileContainer = new sap.m.TileContainer('myTile');
 	
