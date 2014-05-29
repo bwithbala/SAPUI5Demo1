@@ -269,9 +269,9 @@
 			detailPage.addContent(oButtonReset);			
 			
 			var oApp = new sap.m.SplitApp("myApp", {
-				masterPages: masterPage,
-				detailPages: detailPage,	
-					}),
+				masterPages: masterPage
+				detailPages: detailPage	
+					
 			});
 			
 			oShell.setApp(oApp);
