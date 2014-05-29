@@ -124,11 +124,21 @@
 			
        	  jQuery.sap.require("sap.ui.core.IconPool");
 			
-		    var app = new sap.m.App();
+       	  
+     			var oShell= new sap.m.Shell("myShell", {
+			title: "My Application",
+			//logo: "images/SAPUI5.png",
+			headerRightText: "Ballz Test",
+			//logout: function() {alert("Logout button was pressed");}
+		});
+		
+   	  
+       	  
+/*		    var app = new sap.m.App();
 			var page = new sap.m.Page({});
 		    page.setEnableScrolling(false);
 		    app.setInitialPage(page.getId());
-			page.setShowHeader(true);
+			page.setShowHeader(true);*/
 			
             var oButtonDisplay = new sap.m.Button("display", {
 				type: sap.m.ButtonType.Default,
@@ -149,10 +159,10 @@
 		    
 		    
 		//	app.addPage(page);
-			page.setTitle('SCN Feed'); 
+	/*		page.setTitle('SCN Feed'); 
 			page.addContent(oSuggestInput);
 			page.addContent(oButtonDisplay);
-			page.addContent(oButtonReset);
+			page.addContent(oButtonReset);*/
 		   
 		//    app.placeAt('content');			
 		    
@@ -160,12 +170,8 @@
 	
 			function handlePress(oEvent) {
 			    window.open(oEvent.oSource.getActiveIcon(), "_blank");
-			    
-			    
-			    
-			}
-			 
-			
+				}
+	
 			function showData(oEvent){
 				
 				if (!oSuggestInput.getValue()) {
@@ -231,7 +237,7 @@
 						    
 					
 						    
-							 page.addContent(oTileContainer);
+						    detailPage.addContent(oTileContainer);
 						    
 						    }
 						}, 30); 
@@ -244,3 +250,29 @@
 				oSuggestInput.setValue();
 				
 			}
+			
+			
+			var masterPage = new sap.m.Page({});
+			masterPage.setEnableScrolling(false);
+			masterPage.setShowHeader(true);			
+
+			var detailPage = new sap.m.Page({});
+			detailPage.setEnableScrolling(false);
+			detailPage.setShowHeader(true);					
+			
+			
+			masterPage.setTitle('Select Catagory'); 
+	
+			detailPage.setTitle('Selected News'); 
+			detailPage.addContent(oSuggestInput);
+			detailPage.addContent(oButtonDisplay);
+			detailPage.addContent(oButtonReset);			
+			
+			var oApp = new sap.m.SplitApp("myApp", {
+				masterPages: masterPage
+				detailPages: detailPage	
+					}),
+			});
+			
+			oShell.setApp(oApp);
+			oShell.placeAt("content");   			
