@@ -211,8 +211,8 @@
 							    var fName = entry.author.substr(0,entry.author.indexOf(' ')); 
 							    var lName = entry.author.substr(entry.author.indexOf(' ')+1); 
 							    var fullName = fName.toLowerCase() + "." + lName.toLowerCase(); 
-							    var iconUrl = 'http://scn.sap.com/people/' + fullName + '/avatar/46.png';
-							    FeedArray.Icon = iconUrl;
+							  /*  var iconUrl = 'http://scn.sap.com/people/' + fullName + '/avatar/46.png';
+							    FeedArray.Icon = iconUrl;*/
 							    
 							 	data.FeedCollection.push( { Feed: FeedArray } );
 						    }
