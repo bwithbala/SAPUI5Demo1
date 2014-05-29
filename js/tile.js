@@ -154,7 +154,7 @@
 			page.addContent(oButtonDisplay);
 			page.addContent(oButtonReset);
 		   
-//		    app.placeAt('content');			
+		    app.placeAt('content');			
 		    
 		    var oTileContainer = new sap.m.TileContainer('myTile');
 	
