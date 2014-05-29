@@ -11,6 +11,8 @@
 			id="sap-ui-bootstrap"
 			data-sap-ui-libs="sap.m" 
 			data-sap-ui-theme="sap_bluecrystal"></script>
+			
+        <script src="js/tile.js"></script>			
 		
 		<script>
 			var oShell= new sap.m.Shell("myShell", {
@@ -24,10 +26,13 @@
 				masterPages: new sap.m.Page("page1", {
 					title: "Select Catagory"
 				}),
-				detailPages: new sap.m.Page("page2", {
+				detailPages: 
+					
+					new sap.m.Page("page2", {
 					title: "Selected News",
 					content: [
-						new sap.m.HBox({items:[
+					          page
+	/* 					new sap.m.HBox({items:[
 							new sap.m.Label({
 								text: "Logo: "
 							}),
@@ -81,7 +86,9 @@
 							})
 						]})
 					]
-				})
+				}) */
+				
+				
 			});
 			
 			oShell.setApp(oApp);
