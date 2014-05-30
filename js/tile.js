@@ -169,7 +169,7 @@
 		    var oTileContainer = new sap.m.TileContainer('myTile');
 	
 			function handlePress(oEvent) {
-			    window.open(oEvent.oSource.getActiveIcon(), "_blank");
+			    window.open(oEvent.oSource.getActiveIcon(), "target=_blank");
 				}
 	
 			function showData(oEvent){
