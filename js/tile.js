@@ -205,7 +205,8 @@
 							    var string = date.getDate() + " " + months[date.getMonth()] + " " + date.getFullYear();
 
 							    FeedArray.Number = string;
-							    FeedArray.Title = entry.title;
+							  //  FeedArray.Title = entry.title;
+							    FeedArray.Title = entry.contentSnippet;
 							    FeedArray.Info = entry.author;	
 							    FeedArray.ActiveIcon = entry.link;
 							    var fName = entry.author.substr(0,entry.author.indexOf(' ')); 
