@@ -275,4 +275,5 @@
 			});
 			
 			oShell.setApp(oApp);
+			
 			oShell.placeAt("content");   			
