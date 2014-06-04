@@ -28,7 +28,8 @@
 				title : "Test",
 				enableScrolling : false
 			})
-			
+			app.setMode("ShowHideMode");
+
 			var page2 = new sap.m.Page("mySecondPage", {
 				backgroundDesign: "Standard",
 				title : "Test",
@@ -39,7 +40,7 @@
 				}
 			})
 			app.addPage(page, true).addPage(page2, false);
-			
+
 			
 			var button1 = new sap.m.Button('button1', {
 				type: sap.m.ButtonType.Default,
