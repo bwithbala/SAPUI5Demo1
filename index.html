@@ -60,6 +60,12 @@
 			width: 100%;
 			height: 500px;
 		}
+		
+.SlideRightButtonStyle{
+	background-color: green;
+}
+
+		
 
 </style>	
 	
@@ -78,16 +84,8 @@
 			var app = new sap.m.App("myApp123", {
 				initialPage:"page1"
 			});
-			
-				var listButton = new sap.m.Button("listButton",{
-						text : "List",
-						press : function() {
-							//app.to("page2");
-						}
-					});			
-		
-				
-				oSelectNewsPaper = new sap.m.Select({
+
+			oSelectNewsPaper = new sap.m.Select({
 					type: sap.m.SelectType.Default,
 					autoAdjustWidth: true,
 					items: [
@@ -110,9 +108,9 @@
 				
 			
 				var Bar = new sap.m.Bar({ 
-					contentLeft: [new sap.m.Button('SlideRight', {
-						text: "SlideRight", 
-						type:sap.m.ButtonType.accept,
+					contentLeft: [
+					    new sap.m.Button('SlideRight', {
+						icon: sap.ui.core.IconPool.getIconURI("menu2"),
 						press : function() {
 							//oContainer.setSecondaryContentWidth(sap.ui.getCore().byId("tfSidePaneWidth").getValue());
 							                oContainer.setSecondaryContentWidth("300px");
@@ -123,84 +121,30 @@
                                     oSelectNewsPaper         
 		  			
  					                 ], 
-					//contentRight: [new sap.m.Button('Button1', {text: "Edit"})]
+					contentRight: [
+								    new sap.m.Button('settings', {
+										icon: sap.ui.core.IconPool.getIconURI("settings"),
+										press : function() {
+											
+											app.to("settingsPage");
+																	}
+										})
+					               ]
 				});
 
-				
+				var slideRightButton = sap.ui.getCore().byId("SlideRight");
+				slideRightButton.addStyleClass("SlideRightButtonStyle");
 				
 				
 			var page1 = new sap.m.Page("page1", {
 				title:"Page 1",
 				content : [
-					new sap.m.Button({
-						text : "To Page 2",
-						press : function() {
-							app.to("page2");
-						}
-					}),
-					
-					// background image switches
-					new sap.m.Button({
-						text : "Stretched Cheetah",
-						press : function() {
-							app.setBackgroundImage("images/huntingLeopard.jpg");
-							app.setBackgroundColor("");
-							app.setBackgroundOpacity(1);
-							sap.ui.getCore().byId("opacitySlider").setValue(1);
-							app.setBackgroundRepeat(false);
-							sap.ui.getCore().byId("repeatSelect").setSelectedKey("stretch");
-						}
-					}),
-					
-					new sap.m.Button({
-						text : "Repeating translucent Cheetah",
-						press : function() {
-							app.setBackgroundImage("images/huntingLeopard.jpg");
-							app.setBackgroundColor("#f00");
-							app.setBackgroundOpacity(0.6);
-							sap.ui.getCore().byId("opacitySlider").setValue(0.6);
-							app.setBackgroundRepeat(true);
-							sap.ui.getCore().byId("repeatSelect").setSelectedKey("repeat");
-						}
-					}),
-					
-					new sap.m.Button({
-						text : "Clear Background",
-						press : function() {
-							app.setBackgroundImage("");
-							app.setBackgroundColor("");
-							app.setBackgroundOpacity(1);
-							sap.ui.getCore().byId("opacitySlider").setValue(1);
-							app.setBackgroundRepeat(false);
-							sap.ui.getCore().byId("repeatSelect").setSelectedKey("stretch");
-						}
-					}),
-					
-					new sap.m.Select("repeatSelect", {items:[
-							new sap.ui.core.Item({text:"Stretch background",key:"stretch"}),
-							new sap.ui.core.Item({text:"Repeat background",key:"tile"})
-						],
-						change: function(oEvent){
-							var selectedItem = oEvent.getParameter("selectedItem");
-							app.setBackgroundRepeat(selectedItem.getKey() === "stretch" ? false : true);
-						}
-					}),
-					
-					new sap.m.Slider("opacitySlider", {
-						width: "50%",
-						min: 0,
-						max: 1,
-						step: 0.01,
-						liveChange: function(oEvent){
-							var value = oEvent.getParameter("value");
-							app.setBackgroundOpacity(value);
-						}
-					}),
+
 				]
 				
 			});
 
-            page1.addHeaderContent(listButton);
+
             page1.setCustomHeader(Bar);
             
 			var page2 = new sap.m.Page("page2", {
@@ -218,6 +162,81 @@
 				]
 			});
 			app.addPage(page1).addPage(page2);		
+			
+			var settingsPage = new sap.m.Page("settingsPage", {
+				title:"Settings",
+				showNavButton: true,
+				navButtonText: "News",
+				navButtonPress: function(){ app.back(); },
+				content : [ 
+							new sap.m.Button({
+								text : "To Page 2",
+								press : function() {
+									app.to("page2");
+								}
+							}),
+							
+							// background image switches
+							new sap.m.Button({
+								text : "Stretched Cheetah",
+								press : function() {
+									app.setBackgroundImage("images/huntingLeopard.jpg");
+									app.setBackgroundColor("");
+									app.setBackgroundOpacity(1);
+									sap.ui.getCore().byId("opacitySlider").setValue(1);
+									app.setBackgroundRepeat(false);
+									sap.ui.getCore().byId("repeatSelect").setSelectedKey("stretch");
+								}
+							}),
+							
+							new sap.m.Button({
+								text : "Repeating translucent Cheetah",
+								press : function() {
+									app.setBackgroundImage("images/huntingLeopard.jpg");
+									app.setBackgroundColor("#f00");
+									app.setBackgroundOpacity(0.6);
+									sap.ui.getCore().byId("opacitySlider").setValue(0.6);
+									app.setBackgroundRepeat(true);
+									sap.ui.getCore().byId("repeatSelect").setSelectedKey("repeat");
+								}
+							}),
+							
+							new sap.m.Button({
+								text : "Clear Background",
+								press : function() {
+									app.setBackgroundImage("");
+									app.setBackgroundColor("");
+									app.setBackgroundOpacity(1);
+									sap.ui.getCore().byId("opacitySlider").setValue(1);
+									app.setBackgroundRepeat(false);
+									sap.ui.getCore().byId("repeatSelect").setSelectedKey("stretch");
+								}
+							}),
+							
+							new sap.m.Select("repeatSelect", {items:[
+									new sap.ui.core.Item({text:"Stretch background",key:"stretch"}),
+									new sap.ui.core.Item({text:"Repeat background",key:"tile"})
+								],
+								change: function(oEvent){
+									var selectedItem = oEvent.getParameter("selectedItem");
+									app.setBackgroundRepeat(selectedItem.getKey() === "stretch" ? false : true);
+								}
+							}),
+							
+							new sap.m.Slider("opacitySlider", {
+								width: "50%",
+								min: 0,
+								max: 1,
+								step: 0.01,
+								liveChange: function(oEvent){
+									var value = oEvent.getParameter("value");
+									app.setBackgroundOpacity(value);
+								}
+							}),
+				]
+			});
+			app.addPage(page1).addPage(settingsPage);				
+			
 		
 		
 	    var d = sap.ui.Device;
@@ -244,27 +263,10 @@
 				height: "80%",
 				lite: true
 			}),
-
-				    
-			    
 			    ]
 		});
 		
 		oContainer.placeAt("content");
-		
-		
-/* 		var oButton = new sap.ui.commons.Button({
-			text: "Toggle Side Pane",
-			press: function(){
-				oContainer.setSecondaryContentWidth(sap.ui.getCore().byId("tfSidePaneWidth").getValue());
-				oContainer.setShowSecondaryContent(!oContainer.getShowSecondaryContent());
-			}
-		});
-	oButton.placeAt("content"); */
-/* 		var oTF = new sap.ui.commons.TextField("tfSidePaneWidth", {
-			value: "100px",
-		});
-		oTF.placeAt("content"); */
 	</script>
 </head>
 <body class="sapUiBody" role="application">
