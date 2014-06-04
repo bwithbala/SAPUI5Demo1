@@ -13,7 +13,7 @@
 	</script>
 	<script src="https://sapui5.netweaver.ondemand.com/sdk/resources/sap/ui/Device.js" type="text/javascript"></script>
 	
-<script src="js/tile1.js"></script>
+
 <script src="js/jquery.jgfeed.js"></script>
 
 <style type="text/css">
@@ -73,6 +73,8 @@
 			throw(e);
 		}
 		
+		
+		
 			var app = new sap.m.App("myApp123", {
 				initialPage:"page1"
 			});
@@ -83,7 +85,29 @@
 							//app.to("page2");
 						}
 					});			
-			
+		
+				
+				oSelectNewsPaper = new sap.m.Select({
+					type: sap.m.SelectType.Default,
+					autoAdjustWidth: true,
+					items: [
+						oItemMaalaiMalar = new sap.ui.core.Item({
+							key: "0",
+							text: "Maalai Malar",
+						}),
+
+						oItemDailyThanthi = new sap.ui.core.Item({
+							key: "1",
+							text: "Daily Thanthi",
+						}),
+
+						oItemDinaKaran = new sap.ui.core.Item({
+							key: "2",
+							text: "Dina Karan",
+						})
+					]
+				});				
+				
 			
 				var Bar = new sap.m.Bar({ 
 					contentLeft: [new sap.m.Button('SlideRight', {
@@ -95,14 +119,18 @@
 											oContainer.setShowSecondaryContent(!oContainer.getShowSecondaryContent());							
 													}
 						})],	
-/* 					contentMiddle: [ new sap.m.SegmentedButton('SegmentedBar1', {
+ 					contentMiddle: [ 
+/*  					                 new sap.m.SegmentedButton('SegmentedBar1', {
 		  				buttons: [button1, button2, button3], 
 		  				selectedButton: button2,
 		  				visible: true,
 		  				select: function(oEvent) {
 		  					jQuery.sap.log.info('press event segmented: ' + oEvent.getParameter('id'));
 		  					}
-		  			})], */
+		  			}) */
+                                    oSelectNewsPaper         
+		  			
+ 					                 ], 
 					//contentRight: [new sap.m.Button('Button1', {text: "Edit"})]
 				});
 
