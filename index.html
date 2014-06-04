@@ -15,9 +15,18 @@
 		</script>
 		
 		<script type="text/javascript">
+		
 			var app = new sap.m.App("myApp", {
 				initialPage:"page1"
 			});
+			
+				var listButton = new sap.m.Button("listButton",{
+						text : "List",
+						press : function() {
+							//app.to("page2");
+						}
+					});			
+			
 			
 			var page1 = new sap.m.Page("page1", {
 				title:"Page 1",
@@ -90,6 +99,8 @@
 				
 			});
 
+            page1.addHeaderContent(listButton);
+            
 			var page2 = new sap.m.Page("page2", {
 				title:"Page 2",
 				showNavButton: true,
