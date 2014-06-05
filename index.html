@@ -85,6 +85,92 @@
 				initialPage:"page1"
 			});
 
+			
+			var oPopover = new sap.m.Popover({
+				placement: sap.m.PlacementType.Bottom,
+				title: "Settings",
+				showHeader: true,
+		//		beginButton: oBeginButton,
+			//	endButton: oEndButton,
+				beforeOpen: function(oEvent){
+					jQuery.sap.log.info("before popover opens!!!");
+				},
+				afterOpen: function(oEvent){
+					jQuery.sap.log.info("popover is opened finally!!!");
+				},
+				beforeClose: function(oEvent){
+					jQuery.sap.log.info("before popover closes!!!");
+				},
+				afterClose: function(oEvent){
+					jQuery.sap.log.info("popover is closed properly!!!");
+				},
+			//	footer: footer,
+				content: [
+					//new sap.m.Input("focusInput"), oList2
+					
+					// background image switches
+					new sap.m.Button({
+						text : "Stretched Cheetah",
+						press : function() {
+							app.setBackgroundImage("images/huntingLeopard.jpg");
+							app.setBackgroundColor("");
+							app.setBackgroundOpacity(1);
+							sap.ui.getCore().byId("opacitySlider").setValue(1);
+							app.setBackgroundRepeat(false);
+							sap.ui.getCore().byId("repeatSelect").setSelectedKey("stretch");
+						}
+					}),
+					
+					new sap.m.Button({
+						text : "Repeating translucent Cheetah",
+						press : function() {
+							app.setBackgroundImage("images/huntingLeopard.jpg");
+							app.setBackgroundColor("#f00");
+							app.setBackgroundOpacity(0.6);
+							sap.ui.getCore().byId("opacitySlider").setValue(0.6);
+							app.setBackgroundRepeat(true);
+							sap.ui.getCore().byId("repeatSelect").setSelectedKey("repeat");
+						}
+					}),
+					
+					new sap.m.Button({
+						text : "Clear Background",
+						press : function() {
+							app.setBackgroundImage("");
+							app.setBackgroundColor("");
+							app.setBackgroundOpacity(1);
+							sap.ui.getCore().byId("opacitySlider").setValue(1);
+							app.setBackgroundRepeat(false);
+							sap.ui.getCore().byId("repeatSelect").setSelectedKey("stretch");
+						}
+					}),
+					
+					new sap.m.Select("repeatSelect", {items:[
+							new sap.ui.core.Item({text:"Stretch background",key:"stretch"}),
+							new sap.ui.core.Item({text:"Repeat background",key:"tile"})
+						],
+						change: function(oEvent){
+							var selectedItem = oEvent.getParameter("selectedItem");
+							app.setBackgroundRepeat(selectedItem.getKey() === "stretch" ? false : true);
+						}
+					}),
+					
+					new sap.m.Slider("opacitySlider", {
+						width: "50%",
+						min: 0,
+						max: 1,
+						step: 0.01,
+						liveChange: function(oEvent){
+							var value = oEvent.getParameter("value");
+							app.setBackgroundOpacity(value);
+						}
+					}),					
+					
+					
+				],
+				initialFocus: "focusInput"
+			});			
+			
 			oSelectNewsPaper = new sap.m.Select({
 					type: sap.m.SelectType.Default,
 					autoAdjustWidth: true,
@@ -107,15 +193,41 @@
 				});				
 				
 			
+		    var d = sap.ui.Device;
+			var oTextView = new sap.ui.commons.TextView();
+		    oTextView.setText("Tablet" + d.system.tablet);
+		    oTextView.setTooltip("Tablet");
+		    
+			var oTextView1 = new sap.ui.commons.TextView();
+		    oTextView1.setText("Phone" + d.system.phone);
+		    oTextView1.setTooltip("Phone");			
+		    
+			var oTextView2 = new sap.ui.commons.TextView();
+		    oTextView2.setText("desktop" + d.system.desktop);
+		    oTextView2.setTooltip("desktop");				
+			
+			
 				var Bar = new sap.m.Bar({ 
 					contentLeft: [
 					    new sap.m.Button('SlideRight', {
 						icon: sap.ui.core.IconPool.getIconURI("menu2"),
 						press : function() {
 							//oContainer.setSecondaryContentWidth(sap.ui.getCore().byId("tfSidePaneWidth").getValue());
-							                oContainer.setSecondaryContentWidth("300px");
-											oContainer.setShowSecondaryContent(!oContainer.getShowSecondaryContent());							
-													}
+							
+							if ( d.system.tablet == true ){
+						            oContainer.setSecondaryContentWidth("300px");
+							}
+							    
+							if ( d.system.phone == true ){
+						            oContainer.setSecondaryContentWidth("100px");
+							}							
+                            		
+							
+							if ( d.system.desktop == true ){
+						            oContainer.setSecondaryContentWidth("350px");
+							}								
+							oContainer.setShowSecondaryContent(!oContainer.getShowSecondaryContent());							
+							}
 						})],	
  					contentMiddle: [ 
                                     oSelectNewsPaper         
@@ -126,7 +238,10 @@
 										icon: sap.ui.core.IconPool.getIconURI("settings"),
 										press : function() {
 											
-											app.to("settingsPage");
+											oPopover.setPlacement(sap.m.PlacementType.Left);
+											oPopover.openBy(this);											
+											
+											//app.to("settingsPage");
 																	}
 										})
 					               ]
@@ -162,97 +277,8 @@
 				]
 			});
 			app.addPage(page1).addPage(page2);		
-			
-			var settingsPage = new sap.m.Page("settingsPage", {
-				title:"Settings",
-				showNavButton: true,
-				navButtonText: "News",
-				navButtonPress: function(){ app.back(); },
-				content : [ 
-							new sap.m.Button({
-								text : "To Page 2",
-								press : function() {
-									app.to("page2");
-								}
-							}),
-							
-							// background image switches
-							new sap.m.Button({
-								text : "Stretched Cheetah",
-								press : function() {
-									app.setBackgroundImage("images/huntingLeopard.jpg");
-									app.setBackgroundColor("");
-									app.setBackgroundOpacity(1);
-									sap.ui.getCore().byId("opacitySlider").setValue(1);
-									app.setBackgroundRepeat(false);
-									sap.ui.getCore().byId("repeatSelect").setSelectedKey("stretch");
-								}
-							}),
-							
-							new sap.m.Button({
-								text : "Repeating translucent Cheetah",
-								press : function() {
-									app.setBackgroundImage("images/huntingLeopard.jpg");
-									app.setBackgroundColor("#f00");
-									app.setBackgroundOpacity(0.6);
-									sap.ui.getCore().byId("opacitySlider").setValue(0.6);
-									app.setBackgroundRepeat(true);
-									sap.ui.getCore().byId("repeatSelect").setSelectedKey("repeat");
-								}
-							}),
-							
-							new sap.m.Button({
-								text : "Clear Background",
-								press : function() {
-									app.setBackgroundImage("");
-									app.setBackgroundColor("");
-									app.setBackgroundOpacity(1);
-									sap.ui.getCore().byId("opacitySlider").setValue(1);
-									app.setBackgroundRepeat(false);
-									sap.ui.getCore().byId("repeatSelect").setSelectedKey("stretch");
-								}
-							}),
-							
-							new sap.m.Select("repeatSelect", {items:[
-									new sap.ui.core.Item({text:"Stretch background",key:"stretch"}),
-									new sap.ui.core.Item({text:"Repeat background",key:"tile"})
-								],
-								change: function(oEvent){
-									var selectedItem = oEvent.getParameter("selectedItem");
-									app.setBackgroundRepeat(selectedItem.getKey() === "stretch" ? false : true);
-								}
-							}),
-							
-							new sap.m.Slider("opacitySlider", {
-								width: "50%",
-								min: 0,
-								max: 1,
-								step: 0.01,
-								liveChange: function(oEvent){
-									var value = oEvent.getParameter("value");
-									app.setBackgroundOpacity(value);
-								}
-							}),
-				]
-			});
-			app.addPage(page1).addPage(settingsPage);				
-			
-		
-		
-	    var d = sap.ui.Device;
-		var oTextView = new sap.ui.commons.TextView();
-	    oTextView.setText("Tablet" + d.system.tablet);
-	    oTextView.setTooltip("Tablet");
-	    
-		var oTextView1 = new sap.ui.commons.TextView();
-	    oTextView1.setText("Phone" + d.system.phone);
-	    oTextView1.setTooltip("Phone");			
-	    
-		var oTextView2 = new sap.ui.commons.TextView();
-	    oTextView2.setText("desktop" + d.system.desktop);
-	    oTextView2.setTooltip("desktop");		    
-		
-		var oContainer = new sap.ui.unified.SplitContainer({
+
+			var oContainer = new sap.ui.unified.SplitContainer({
 			content: [
 			   app
 			          ],
